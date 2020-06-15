@@ -6,7 +6,11 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+
 import Home from './components/Home'
+import News from './components/News'
+import Footer from './components/Footer'
+
 
 function App() {
 
@@ -19,6 +23,9 @@ function App() {
         <Switch>
         <Route exact path='/'>
           <Home />
+        </Route>
+        <Route exact path='/news'>
+          <News />
         </Route>
         </Switch>
         </div>
