@@ -72,12 +72,6 @@ const RSNav = (props) => {
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
             </UncontrolledDropdown>
-            <Form inline onSubmit={SubmitHandler()} className='ml-3'>
-      <FormGroup>
-        <Label for="search"></Label>
-        <Input type="text" name="text" id="search" placeholder="Enter ticker..." />
-      </FormGroup>
-    </Form>
           </Nav>
     <Link to='/login'style={{textDecoration: 'none'}}> 
       <Button color='light'>

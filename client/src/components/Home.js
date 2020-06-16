@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import {  Alert, Input, Form, FormGroup, Label} from 'reactstrap';
 import axios from 'axios'
@@ -8,27 +7,34 @@ const Home = () => {
 
   const [stockChartXValues, setStockChartXValues] = useState([])
   const [stockChartYValues, setStockChartYValues] = useState([])
+  const [stockSymbol, setStockSymbol] = useState('AMZN')
   
-  
-    const apiKey = 'ATV02GHO65FWCYOC'
-    let stockSymbol = 'AMZN'
-    let apiCall = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${stockSymbol}&outputsize=compact&apikey=${apiKey}`
+    
+    const changeStockSymbol = (e) => {
+      e.preventDefault();
+      setStockChartXValues([]);
+      setStockChartYValues([]);
+      setStockSymbol(document.getElementById('search').value.toUpperCase())
+    }
+    
 
     useEffect(() => {
+      const apiKey = 'ATV02GHO65FWCYOC'
+      let apiCall = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${stockSymbol}&outputsize=compact&apikey=${apiKey}`
+      
       axios.get(apiCall)
         .then(res => {
           console.log(res)
           for (var key in res.data['Time Series (Daily)']) {
              setStockChartXValues(prevArr => [...prevArr, key])
               setStockChartYValues(prevArr => [...prevArr, res.data['Time Series (Daily)'][key]['1. open']])
-              
       }
     })
         .catch(err => {
           console.log(err)
     })
       
-    }, [])
+    }, [stockSymbol])
 
     
   
@@ -38,6 +44,12 @@ const Home = () => {
     <Alert color='warning mt-3'>
       This site is currently under construction.
     </Alert>
+    <Form className='d-flex justify-content-center' onSubmit={changeStockSymbol}>
+      <FormGroup>
+        <Label for="search"></Label>
+        <Input type="text" name="search" id="search" placeholder="Enter symbol..." />
+      </FormGroup>
+    </Form>
       <Plot
       className='d-flex justify-content-center'
           data={[
