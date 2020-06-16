@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  Alert, Input, Form, FormGroup, Label} from 'reactstrap';
+import {  Alert, Input, Form, FormGroup, Label } from 'reactstrap';
 import axios from 'axios'
 import Plot from 'react-plotly.js' 
 
@@ -41,9 +41,6 @@ const Home = () => {
 
   return (
     <div>
-    <Alert color='warning mt-3'>
-      This site is currently under construction.
-    </Alert>
     <Form className='d-flex justify-content-center' onSubmit={changeStockSymbol}>
       <FormGroup>
         <Label for="search"></Label>

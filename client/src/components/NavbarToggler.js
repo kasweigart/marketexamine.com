@@ -8,13 +8,17 @@ import {
   NavItem,
   NavLink,
   UncontrolledDropdown,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
   Form,
   FormGroup,
   Label,
-  Input,
-  Button
+  Input
 } from 'reactstrap';
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import melogo from '../images/melogo.png'
 
 const RSNav = (props) => {
@@ -22,11 +26,13 @@ const RSNav = (props) => {
 
   const toggle = () => setIsOpen(!isOpen);
 
-  function SubmitHandler() {
-    return (
-      <Redirect to='/search' />
-    )
-  }
+  const {
+    className
+  } = props;
+
+  const [modal, setModal] = useState(false);
+
+  const toggle2 = () => setModal(!modal);
 
   return (
     <div>
@@ -73,11 +79,29 @@ const RSNav = (props) => {
             <UncontrolledDropdown nav inNavbar>
             </UncontrolledDropdown>
           </Nav>
-    <Link to='/login'style={{textDecoration: 'none'}}> 
-      <Button color='light'>
+      <Button color='light' onClick={toggle2}>
             Login
             </Button>
-            </Link>
+            <Modal isOpen={modal} toggle={toggle2} className={className}>
+        <ModalHeader toggle={toggle2}>Login</ModalHeader>
+        <ModalBody>
+        <Form>
+      <FormGroup>
+        <Label for="email">Email</Label>
+        <Input type="email" name="email" id="email" placeholder="" />
+      </FormGroup>
+      <FormGroup>
+        <Label for="password">Password</Label>
+        <Input type="text" name="password" id="password" placeholder="" />
+      </FormGroup>
+      </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="dark" onClick={toggle2}>Sign Up</Button>
+          <Button color="secondary" onClick={toggle2}>Login</Button>
+          <Button color="danger" onClick={toggle2}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
         </Collapse>
       </Navbar>
     </div>
