@@ -14,7 +14,6 @@ import MyWatchlist from './components/MyWatchlist'
 import Tools from './components/Tools'
 import Crypto from './components/Crypto'
 import Contact from './components/Contact'
-import Login from './components/Login'
 import Footer from './components/Footer'
 
 
@@ -29,28 +28,27 @@ function App() {
         <Switch>
         <Route exact path='/'>
           <Home />
-          </Route>
-        <Route exact path='/markets'>
+        </Route>
+        <Route path='/markets'>
           <Markets />
         </Route>
-        <Route exact path='/news'>
+        <Route path='/news'>
           <News />
         </Route>
-        <Route exact path='/my-watchlist'>
+        <Route path='/my-watchlist'>
           <MyWatchlist />
         </Route>
-        <Route exact path='/tools'>
+        <Route path='/tools'>
           <Tools />
         </Route>
-        <Route exact path='/crypto'>
+        <Route path='/crypto'>
           <Crypto />
         </Route>
-        <Route exact path='/contact'>
+        <Route path='/contact'>
           <Contact />
         </Route>
-        <Route exact path='/login'>
-          <Login />
-        </Route>
+        <Route path='/sign-up' />
+        <Route path='/login' />
         </Switch>
         </div>
       </div>

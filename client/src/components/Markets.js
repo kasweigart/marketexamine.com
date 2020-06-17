@@ -2,7 +2,9 @@ import React from 'react';
 import { Toast, ToastBody, ToastHeader, Container, Row, Col, ButtonGroup, Button } from 'reactstrap';
 import Plot from 'react-plotly.js' 
 
-const Markets = (props) => {
+const Markets = () => {
+
+    
   return (
     <div>
     <Container>

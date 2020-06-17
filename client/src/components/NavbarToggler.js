@@ -20,19 +20,13 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import melogo from '../images/melogo.png'
+import SignUp from './SignUp'
+import Login from './Login'
 
 const RSNav = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-
-  const {
-    className
-  } = props;
-
-  const [modal, setModal] = useState(false);
-
-  const toggle2 = () => setModal(!modal);
 
   return (
     <div>
@@ -79,29 +73,12 @@ const RSNav = (props) => {
             <UncontrolledDropdown nav inNavbar>
             </UncontrolledDropdown>
           </Nav>
-      <Button color='light' onClick={toggle2}>
-            Login
-            </Button>
-            <Modal isOpen={modal} toggle={toggle2} className={className}>
-        <ModalHeader toggle={toggle2}>Login</ModalHeader>
-        <ModalBody>
-        <Form>
-      <FormGroup>
-        <Label for="email">Email</Label>
-        <Input type="email" name="email" id="email" placeholder="" />
-      </FormGroup>
-      <FormGroup>
-        <Label for="password">Password</Label>
-        <Input type="text" name="password" id="password" placeholder="" />
-      </FormGroup>
-      </Form>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="dark" onClick={toggle2}>Sign Up</Button>
-          <Button color="secondary" onClick={toggle2}>Login</Button>
-          <Button color="danger" onClick={toggle2}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
+          <Link to='/sign-up'>
+          <SignUp />
+          </Link>
+          <Link to='/login'>
+          <Login />
+          </Link>
         </Collapse>
       </Navbar>
     </div>
