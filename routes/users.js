@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const flash = require("connect-flash");
-const session = require("express-session");
+const passport = require("passport");
 let User = require("../models/user.model");
 
 router.get("/", (req, res) => {
@@ -24,10 +23,22 @@ router.post("/add", (req, res) => {
       newUser.password = hash;
       newUser
         .save()
-        .then(() => res.json("User added!"))
+        .then(() => {
+          res.json("User added!");
+          req.flash("success_msg", "You are now registered and can log in");
+          res.redirect("/");
+        })
         .catch((err) => res.status(400).json("Error: " + err));
     });
   });
 });
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/my-watchlist',
+    failureRedirect: '/login',
+    failureFlash: true
+  })(req, res, next);
+})
 
 module.exports = router;

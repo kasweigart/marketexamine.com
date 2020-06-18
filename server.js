@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -7,6 +8,8 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const usersRouter = require("./routes/users");
 const watchlistsRouter = require("./routes/watchlists");
+const passport = require("passport");
+require("./config/passport");
 require("dotenv").config();
 const port = 3001;
 
@@ -22,6 +25,9 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(flash());
 
