@@ -1,22 +1,23 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser')
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
-const flash = require("connect-flash");
 const session = require("express-session");
-const usersRouter = require("./routes/users");
+const userRouter = require("./routes/users");
 const watchlistsRouter = require("./routes/watchlists");
 const passport = require("passport");
-require("./config/passport");
-require("dotenv").config();
 const port = 3001;
-
-app.use(cors());
+require("dotenv").config();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 
 app.use(
   session({
@@ -25,9 +26,10 @@ app.use(
     saveUninitialized: true,
   })
 );
-
+app.use(cookieParser('secret'));
 app.use(passport.initialize());
 app.use(passport.session());
+require("./config/passport")(passport);
 
 app.use(flash());
 
@@ -48,7 +50,7 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-app.use("/users", usersRouter);
+app.use("/user", userRouter);
 app.use("/watchlists", watchlistsRouter);
 
 app.use(express.static(path.join(__dirname, "client/build")));

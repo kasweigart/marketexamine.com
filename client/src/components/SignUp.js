@@ -42,11 +42,8 @@ const SignUp = () => {
       date: Date(),
     };
 
-    
-    
-
     axios
-      .post("http://localhost:3001/users/add", user)
+      .post("http://localhost:3001/user/register", user)
       .then((res) => {
         setSignUpSuccess(signUpAlert)
         setTimeout(function(){ window.location = '/'; }, 3000);
@@ -58,7 +55,6 @@ const SignUp = () => {
     Your registration was successful. Redirecting to the homepage... You may now log in.
   </Alert>)
   
-
   const toggle = () => {
     setModal(!modal);
     if (modal) {
