@@ -1,43 +1,28 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
-const cookieParser = require('cookie-parser')
-const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
-const session = require("express-session");
-const userRouter = require("./routes/users");
-const watchlistsRouter = require("./routes/watchlists");
-const passport = require("passport");
 const port = 3001;
 require("dotenv").config();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
-}));
-
-app.use(
-  session({
-    secret: "secret",
-    resave: true,
-    saveUninitialized: true,
-  })
-);
-app.use(cookieParser('secret'));
-app.use(passport.initialize());
-app.use(passport.session());
-require("./config/passport")(passport);
-
-app.use(flash());
-
-app.use((req, res, next) => {
-  res.locals.success_msg = req.flash("success_msg");
-  res.locals.error_msg = req.flash("error_msg");
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
+
+app.use(express.json());
+
+app.use(cookieParser("secret"));
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
@@ -45,13 +30,14 @@ mongoose.connect(uri, {
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
+
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
+const userRouter = require("./routes/user");
 app.use("/user", userRouter);
-app.use("/watchlists", watchlistsRouter);
 
 app.use(express.static(path.join(__dirname, "client/build")));
 

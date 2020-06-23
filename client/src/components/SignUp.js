@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import AuthService from "../Services/AuthService";
 import {
   Button,
   Modal,
@@ -9,16 +10,15 @@ import {
   FormGroup,
   Label,
   Input,
-  Alert
+  Alert,
 } from "reactstrap";
-import axios from "axios";
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [modal, setModal] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signUpSuccess, setSignUpSuccess] = useState('')
+  const [message, setMessage] = useState(null);
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -32,35 +32,45 @@ const SignUp = () => {
     setPassword(e.target.value);
   };
 
+  let timerID = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerID);
+    };
+  }, []);
+
   const onSubmit = (e) => {
     e.preventDefault();
-
     const user = {
       name,
       email,
       password,
-      date: Date(),
+      date: Date.now,
     };
-
-    axios
-      .post("http://localhost:3001/user/register", user)
-      .then((res) => {
-        setSignUpSuccess(signUpAlert)
-        setTimeout(function(){ window.location = '/'; }, 3000);
-      })
-      .catch((err) => console.log(err));
+    AuthService.register(user).then((data) => {
+      console.log(data);
+      setMessage(<Alert color="success">{data.message.msgBody}</Alert>);
+      if (data.message.msgError == false) {
+        timerID = setTimeout(() => {
+          props.history.push("/login");
+        }, 2000);
+      }
+    });
   };
 
-  const signUpAlert = (<Alert color="success">
-    Your registration was successful. Redirecting to the homepage... You may now log in.
-  </Alert>)
-  
   const toggle = () => {
     setModal(!modal);
     if (modal) {
       window.location = "/";
     }
   };
+
+  // const successMessage = (
+  //   <Alert color="danger">
+  //       This is a danger alert — check it out!
+  //     </Alert>
+  // )
 
   return (
     <div>
@@ -69,7 +79,7 @@ const SignUp = () => {
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Sign Up</ModalHeader>
-        {signUpSuccess}
+        {message}
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>

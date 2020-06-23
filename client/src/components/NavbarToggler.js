@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthService from "../Services/AuthService";
+import { AuthContext } from "../Context/AuthContext";
 import {
   Collapse,
   Navbar,
@@ -13,8 +15,13 @@ import { Link } from "react-router-dom";
 import melogo from "../images/melogo.png";
 import SignUp from "./SignUp";
 import Login from "./Login";
+import axios from "axios";
 
-const RSNav = (props) => {
+const RSNav = () => {
+  const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(
+    AuthContext
+  );
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -65,7 +72,7 @@ const RSNav = (props) => {
             </NavItem>
             <UncontrolledDropdown nav inNavbar></UncontrolledDropdown>
           </Nav>
-          <Link to="/sign-up">
+          <Link to="sign-up">
             <SignUp />
           </Link>
           <Link to="/login">

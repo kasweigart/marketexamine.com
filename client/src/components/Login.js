@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthService from "../Services/AuthService";
+import { AuthContext } from "../Context/AuthContext";
 import {
   Button,
   Modal,
@@ -10,34 +12,34 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import axios from "axios";
 
-const Login = () => {
+const Login = (props) => {
+  const [email, setEmail] = useState({ email: "", password: "" });
+  const [message, setMessage] = useState(null);
   const [modal, setModal] = useState(false);
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const authContext = useContext(AuthContext);
 
-  const onChangeLoginEmail = (e) => {
-    setLoginEmail(e.target.value);
+  const onChangeEmail = (e) => {
+    setEmail(e.target.value);
   };
 
-  const onChangeLoginPassword = (e) => {
-    setLoginPassword(e.target.value);
+  const onChangePassword = (e) => {
+    setPassword(e.target.value);
   };
 
-  const onLoginSubmit = (e) => {
-    e.preventDefault();
-
-    const loginUser = {
-      loginEmail,
-      loginPassword,
-    };
-
-    axios
-      .post("http://localhost:3001/user/login", loginUser)
-      .then((res) => {})
-      .catch((err) => console.log(err));
-  };
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   AuthService.login(email).then((data) => {
+  //     console.log(data);
+  //     const { isAuthenticated, user, message } = data;
+  //     if (isAuthenticated) {
+  //       authContext.setUser(user);
+  //       authContext.setIsAuthenticated(isAuthenticated);
+  //       props.history.push("/watchlist");
+  //     } else setMessage(message);
+  //   });
+  // };
 
   const toggle = () => {
     setModal(!modal);
@@ -54,20 +56,27 @@ const Login = () => {
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Login</ModalHeader>
         <ModalBody>
-          <Form onSubmit={onLoginSubmit}>
+          <Form>
             <FormGroup>
               <Label for="email">Email</Label>
-              <Input type="email" name="email" id="email" placeholder="" value={loginEmail} onChange={onChangeLoginEmail}/>
+              <Input
+                type="email"
+                name="email"
+                id="loginEmail"
+                placeholder=""
+                value={email}
+                onChange={onChangeEmail}
+              />
             </FormGroup>
             <FormGroup>
               <Label for="password">Password</Label>
               <Input
                 type="password"
                 name="password"
-                id="password"
+                id="loginPassword"
                 placeholder=""
-                value={loginPassword}
-                onChange={onChangeLoginPassword}
+                value={password}
+                onChange={onChangePassword}
               />
             </FormGroup>
             <ModalFooter>

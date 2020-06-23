@@ -36,6 +36,15 @@ const Home = () => {
       });
   }, [stockSymbol]);
 
+  // axios
+  //   .get("http://localhost:3001/user")
+  //   .then((res) => {
+  //     setData(res.data)
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+
   return (
     <div>
       <Form
