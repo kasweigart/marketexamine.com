@@ -23,22 +23,22 @@ userRouter.post("/register", (req, res) => {
     if (err)
       res
         .status(500)
-        .json({ message: { msgBody: "Error has occured", msgError: true } });
+        .json({ message: { msgBody: "An error has occurred.", msgError: true } });
     if (user)
       res.status(400).json({
-        message: { msgBody: "Email is already taken", msgError: true },
+        message: { msgBody: "This email is already taken.", msgError: true },
       });
     else {
       const newUser = new User({ name, email, password });
       newUser.save((err) => {
         if (err)
           res.status(500).json({
-            message: { msgBody: "Error has occured", msgError: true },
+            message: { msgBody: "An error has occurred.", msgError: true },
           });
         else
           res.status(201).json({
             message: {
-              msgBody: "Account successfully created",
+              msgBody: "Your account was successfully registered. Redirecting to the home page... You may now log in.",
               msgError: false,
             },
           });

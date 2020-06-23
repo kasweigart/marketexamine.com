@@ -18,6 +18,7 @@ const SignUp = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
   const [message, setMessage] = useState(null);
 
   const onChangeName = (e) => {
@@ -32,6 +33,10 @@ const SignUp = (props) => {
     setPassword(e.target.value);
   };
 
+  const onChangePassword2 = (e) => {
+    setPassword2(e.target.value);
+  };
+
   let timerID = useRef(null);
 
   useEffect(() => {
@@ -39,6 +44,13 @@ const SignUp = (props) => {
       clearTimeout(timerID);
     };
   }, []);
+
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPassword("");
+    setPassword2("");
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -48,15 +60,30 @@ const SignUp = (props) => {
       password,
       date: Date.now,
     };
-    AuthService.register(user).then((data) => {
-      console.log(data);
-      setMessage(<Alert color="success">{data.message.msgBody}</Alert>);
-      if (data.message.msgError == false) {
-        timerID = setTimeout(() => {
-          props.history.push("/login");
-        }, 2000);
-      }
-    });
+
+    if (name === "" || email === "" || password === "" || password2 === "") {
+      setMessage(<Alert color="danger">Please enter all fields.</Alert>);
+    } else if (password !== password2) {
+      setMessage(<Alert color="danger">Passwords do not match.</Alert>);
+    } else if (password !== "" && password.length < 6) {
+      setMessage(
+        <Alert color="danger">Password must be at least 6 characters.</Alert>
+      );
+    } else {
+      AuthService.register(user).then((data) => {
+        if (data.message.msgError === false) {
+          setMessage(<Alert color="success">{data.message.msgBody}</Alert>);
+          timerID = setTimeout(() => {
+            window.location = "/";
+          }, 3000);
+        } else if (data.message.msgError === true) {
+          setMessage(<Alert color="danger">{data.message.msgBody}</Alert>);
+        } else {
+          setMessage(<Alert color="danger">An error has occurred.</Alert>);
+        }
+      });
+    }
+    resetForm();
   };
 
   const toggle = () => {
@@ -65,12 +92,6 @@ const SignUp = (props) => {
       window.location = "/";
     }
   };
-
-  // const successMessage = (
-  //   <Alert color="danger">
-  //       This is a danger alert — check it out!
-  //     </Alert>
-  // )
 
   return (
     <div>
@@ -119,9 +140,10 @@ const SignUp = (props) => {
               <Label for="conPassword">Confirm Password</Label>
               <Input
                 type="password"
-                name="conPassword"
-                id="conPassword"
-                placeholder=""
+                name="password2"
+                id="password2"
+                value={password2}
+                onChange={onChangePassword2}
               />
             </FormGroup>
             <ModalFooter>
