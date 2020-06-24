@@ -7,8 +7,6 @@ const passport = require("passport");
 const port = 3001;
 require("dotenv").config();
 
-
-
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
@@ -29,7 +27,7 @@ app.use(cookieParser("secret"));
 
 app.use(passport.initialize());
 
-require("./config/passport")(passport)
+require("./config/passport")(passport);
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
@@ -43,14 +41,11 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-
-
-
 const userRouter = require("./routes/user");
 app.use("/user", userRouter);
 
-const newsRouter = require('./routes/news')
-app.use('/news', newsRouter)
+const newsRouter = require("./routes/news");
+app.use("/news", newsRouter);
 
 app.use(express.static(path.join(__dirname, "client/build")));
 

@@ -24,9 +24,24 @@ const News = (props) => {
   const [author, setAuthor] = useState("");
   const [time, setTime] = useState("");
 
+  const [title2, setTitle2] = useState("");
+  const [description2, setDescription2] = useState("");
+  const [image2, setImage2] = useState("");
+  const [source2, setSource2] = useState("");
+  const [url2, setUrl2] = useState("");
+  const [author2, setAuthor2] = useState("");
+  const [time2, setTime2] = useState("");
+
+  const [title3, setTitle3] = useState("");
+  const [description3, setDescription3] = useState("");
+  const [image3, setImage3] = useState("");
+  const [source3, setSource3] = useState("");
+  const [url3, setUrl3] = useState("");
+  const [author3, setAuthor3] = useState("");
+  const [time3, setTime3] = useState("");
+
   useEffect(() => {
     axios("/news").then((res) => {
-      console.log(res);
       setTitle(res.data.articles[0].title);
       setDescription(res.data.articles[0].description);
       setImage(res.data.articles[0].urlToImage);
@@ -34,9 +49,27 @@ const News = (props) => {
       setUrl(res.data.articles[0].url);
       setAuthor(res.data.articles[0].author);
       setTime(
-        moment(res.data.articles[0].publishedAt).format(
-          "dddd, MMMM Do YYYY"
-        )
+        moment(res.data.articles[0].publishedAt).format("dddd, MMMM Do YYYY")
+      );
+
+      setTitle2(res.data.articles[1].title);
+      setDescription2(res.data.articles[1].description);
+      setImage2(res.data.articles[1].urlToImage);
+      setSource2(res.data.articles[1].source.name);
+      setUrl2(res.data.articles[1].url);
+      setAuthor2(res.data.articles[1].author);
+      setTime2(
+        moment(res.data.articles[1].publishedAt).format("dddd, MMMM Do YYYY")
+      );
+
+      setTitle3(res.data.articles[2].title);
+      setDescription3(res.data.articles[2].description);
+      setImage3(res.data.articles[2].urlToImage);
+      setSource3(res.data.articles[2].source.name);
+      setUrl3(res.data.articles[2].url);
+      setAuthor3(res.data.articles[2].author);
+      setTime3(
+        moment(res.data.articles[2].publishedAt).format("dddd, MMMM Do YYYY")
       );
     });
   }, []);
@@ -48,7 +81,7 @@ const News = (props) => {
           <Col>
             <Jumbotron>
               <p className="lead">
-                <i>By: {author}</i>
+                <i>{author}</i>
               </p>
               <p className="lead">
                 <i>{time}</i>
@@ -66,59 +99,36 @@ const News = (props) => {
               </p>
               <p className="lead">
                 <a href={url}>
-                  <Button color="primary">Learn More</Button>
+                  <Button color="secondary">View Source</Button>
                 </a>
               </p>
             </Jumbotron>
-            <Card>
-              <CardImg
-                top
-                width="100%"
-                src="/assets/318x180.svg"
-                alt="Card image cap"
-              />
+            <Card className="p-5 mb-4">
+            <h3 className='mb-4'>{title2}</h3>
+            <CardText><i>{author2}</i></CardText>
+            <CardText><i>{time2}</i></CardText>
+              <CardImg src={image2} className="img-fluid w-75" />
               <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                <CardText>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </CardText>
-                <Button>Button</Button>
+                <CardSubtitle></CardSubtitle>
+                <CardText>{description2}</CardText>
+                <CardText><i>{source2}</i></CardText>
+                <a href={url2}>
+                  <Button>View Source</Button>
+                </a>
               </CardBody>
             </Card>
-            <Card>
-              <CardImg
-                top
-                width="100%"
-                src="/assets/318x180.svg"
-                alt="Card image cap"
-              />
+            <Card className="p-5">
+            <h3 className='mb-4'>{title3}</h3>
+            <CardText><i>{author3}</i></CardText>
+            <CardText><i>{time3}</i></CardText>
+              <CardImg src={image3} className="img-fluid w-75" />
               <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                <CardText>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </CardText>
-                <Button>Button</Button>
-              </CardBody>
-            </Card>
-            <Card>
-              <CardImg
-                top
-                width="100%"
-                src="/assets/318x180.svg"
-                alt="Card image cap"
-              />
-              <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                <CardText>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </CardText>
-                <Button>Button</Button>
+                <CardSubtitle></CardSubtitle>
+                <CardText>{description3}</CardText>
+                <CardText><i>{source3}</i></CardText>
+                <a href={url3}>
+                  <Button>View Source</Button>
+                </a>
               </CardBody>
             </Card>
           </Col>

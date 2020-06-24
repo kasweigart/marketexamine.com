@@ -61,8 +61,11 @@ const Home = () => {
           />
         </FormGroup>
       </Form>
+      <div style={{width: '100%', height: '100%'}}>
       <Plot
         className="d-flex justify-content-center"
+        useResizeHandler={true}
+        style={{width: '100%', height: '100%'}}
         data={[
           {
             x: stockChartXValues,
@@ -72,8 +75,26 @@ const Home = () => {
             marker: { color: "red" },
           },
         ]}
-        layout={{ width: 720, height: 720, title: `${stockSymbol}` }}
+        layout={{ title: `${stockSymbol}`, autosize: true }}
       />
+      </div>
+      <div style={{width: '100%', height: '100%'}}>
+      <Plot
+        className="d-flex justify-content-center"
+        useResizeHandler={true}
+        style={{width: '100%', height: '100%'}}
+        data={[
+          {
+            x: stockChartXValues,
+            y: stockChartYValues,
+            type: "scatter",
+            mode: "lines+markers",
+            marker: { color: "red" },
+          },
+        ]}
+        layout={{ title: `${stockSymbol}`, autosize: true }}
+      />
+      </div>
     </div>
   );
 };

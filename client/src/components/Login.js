@@ -12,6 +12,9 @@ import {
   Label,
   Input,
   Alert,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
 } from "reactstrap";
 
 const Login = (props) => {
@@ -70,25 +73,35 @@ const Login = (props) => {
           <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label for="email">Email</Label>
-              <Input
-                type="text"
-                name="email"
-                id="loginEmail"
-                placeholder=""
-                value={email}
-                onChange={onChangeEmail}
-              />
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>@</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="text"
+                  name="email"
+                  id="loginEmail"
+                  placeholder=""
+                  value={email}
+                  onChange={onChangeEmail}
+                />
+              </InputGroup>
             </FormGroup>
             <FormGroup>
               <Label for="password">Password</Label>
-              <Input
-                type="password"
-                name="password"
-                id="loginPassword"
-                placeholder=""
-                value={password}
-                onChange={onChangePassword}
-              />
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>🔑</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="password"
+                  name="password"
+                  id="loginPassword"
+                  placeholder=""
+                  value={password}
+                  onChange={onChangePassword}
+                />
+              </InputGroup>
             </FormGroup>
             <ModalFooter>
               <Button color="secondary" type="submit">

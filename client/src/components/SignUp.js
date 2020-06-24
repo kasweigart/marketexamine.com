@@ -11,6 +11,9 @@ import {
   Label,
   Input,
   Alert,
+  InputGroupAddon,
+  InputGroup,
+  InputGroupText
 } from "reactstrap";
 
 const SignUp = (props) => {
@@ -105,46 +108,66 @@ const SignUp = (props) => {
           <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label for="name">Name</Label>
-              <Input
-                type="text"
-                name="name"
-                id="name"
-                placeholder=""
-                value={name}
-                onChange={onChangeName}
-              />
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>📛</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder=""
+                  value={name}
+                  onChange={onChangeName}
+                />
+              </InputGroup>
             </FormGroup>
             <FormGroup>
               <Label for="email">Email</Label>
-              <Input
-                type="email"
-                name="email"
-                id="email"
-                placeholder=""
-                value={email}
-                onChange={onChangeEmail}
-              />
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>@</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder=""
+                  value={email}
+                  onChange={onChangeEmail}
+                />
+              </InputGroup>
             </FormGroup>
             <FormGroup>
               <Label for="password">Password</Label>
-              <Input
-                type="password"
-                name="password"
-                id="password"
-                placeholder=""
-                value={password}
-                onChange={onChangePassword}
-              />
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>🔑</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder=""
+                  value={password}
+                  onChange={onChangePassword}
+                />
+              </InputGroup>
             </FormGroup>
             <FormGroup>
               <Label for="conPassword">Confirm Password</Label>
-              <Input
-                type="password"
-                name="password2"
-                id="password2"
-                value={password2}
-                onChange={onChangePassword2}
-              />
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>🔑</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="password"
+                  name="password2"
+                  id="password2"
+                  value={password2}
+                  onChange={onChangePassword2}
+                />
+              </InputGroup>
             </FormGroup>
             <ModalFooter>
               <Button typecolor="secondary" type="submit">
