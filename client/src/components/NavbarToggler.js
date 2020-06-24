@@ -15,13 +15,8 @@ import { Link } from "react-router-dom";
 import melogo from "../images/melogo.png";
 import SignUp from "./SignUp";
 import Login from "./Login";
-import axios from "axios";
 
 const RSNav = () => {
-  const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(
-    AuthContext
-  );
-
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);

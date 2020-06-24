@@ -11,10 +11,11 @@ import {
   FormGroup,
   Label,
   Input,
+  Alert,
 } from "reactstrap";
 
 const Login = (props) => {
-  const [email, setEmail] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [modal, setModal] = useState(false);
   const [password, setPassword] = useState("");
@@ -28,18 +29,27 @@ const Login = (props) => {
     setPassword(e.target.value);
   };
 
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   AuthService.login(email).then((data) => {
-  //     console.log(data);
-  //     const { isAuthenticated, user, message } = data;
-  //     if (isAuthenticated) {
-  //       authContext.setUser(user);
-  //       authContext.setIsAuthenticated(isAuthenticated);
-  //       props.history.push("/watchlist");
-  //     } else setMessage(message);
-  //   });
-  // };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const user = {
+      email,
+      password,
+    };
+
+    if (email === "" || password === "") {
+      setMessage(<Alert color="danger">Please fill in all fields.</Alert>);
+    } else {
+      AuthService.login(user).then((data) => {
+        console.log(data);
+        const { isAuthenticated, user } = data;
+        if (isAuthenticated) {
+          authContext.setUser(user);
+          authContext.setIsAuthenticated(isAuthenticated);
+        } else
+          setMessage(<Alert color="danger">Invalid email or password.</Alert>);
+      });
+    }
+  };
 
   const toggle = () => {
     setModal(!modal);
@@ -55,12 +65,13 @@ const Login = (props) => {
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Login</ModalHeader>
+        {message}
         <ModalBody>
-          <Form>
+          <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label for="email">Email</Label>
               <Input
-                type="email"
+                type="text"
                 name="email"
                 id="loginEmail"
                 placeholder=""

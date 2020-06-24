@@ -5,12 +5,11 @@ export default {
       method: "post",
       body: JSON.stringify(user),
       headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
+        "Content-Type": "application/json"
       },
     }).then((res) => {
       if (res.status !== 401) return res.json().then((data) => data);
-      else return { isAuthenticated: false, user: { username: "", role: "" } };
+      else return { isAuthenticated: false, user: { email: "", password: "" } };
     });
   },
   register: (user) => {
@@ -31,12 +30,7 @@ export default {
       .then((data) => data);
   },
   isAuthenticated: () => {
-    return fetch("/user/authenticated", {
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-    }).then((res) => {
+    return fetch("/user/authenticated").then((res) => {
       if (res.status !== 401) return res.json().then((data) => data);
       else return { isAuthenticated: false, user: { username: "", role: "" } };
     });
