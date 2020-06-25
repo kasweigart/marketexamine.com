@@ -6,7 +6,6 @@ import {
   CardImg,
   CardText,
   CardBody,
-  CardTitle,
   CardSubtitle,
   Container,
   Row,
@@ -89,7 +88,7 @@ const News = (props) => {
               <h1 className="display-3">{title}</h1>
               <img
                 src={image}
-                alt="alternatetext"
+                alt=""
                 className="img-fluid mb-3 mt-4 text-center"
               />
               <p className="lead">{description}</p>
@@ -104,28 +103,40 @@ const News = (props) => {
               </p>
             </Jumbotron>
             <Card className="p-5 mb-4">
-            <h3 className='mb-4'>{title2}</h3>
-            <CardText><i>{author2}</i></CardText>
-            <CardText><i>{time2}</i></CardText>
+              <h3 className="mb-4">{title2}</h3>
+              <CardText>
+                <i>{author2}</i>
+              </CardText>
+              <CardText>
+                <i>{time2}</i>
+              </CardText>
               <CardImg src={image2} className="img-fluid w-75" />
               <CardBody>
                 <CardSubtitle></CardSubtitle>
                 <CardText>{description2}</CardText>
-                <CardText><i>{source2}</i></CardText>
+                <CardText>
+                  <i>{source2}</i>
+                </CardText>
                 <a href={url2}>
                   <Button>View Source</Button>
                 </a>
               </CardBody>
             </Card>
             <Card className="p-5">
-            <h3 className='mb-4'>{title3}</h3>
-            <CardText><i>{author3}</i></CardText>
-            <CardText><i>{time3}</i></CardText>
+              <h3 className="mb-4">{title3}</h3>
+              <CardText>
+                <i>{author3}</i>
+              </CardText>
+              <CardText>
+                <i>{time3}</i>
+              </CardText>
               <CardImg src={image3} className="img-fluid w-75" />
               <CardBody>
                 <CardSubtitle></CardSubtitle>
                 <CardText>{description3}</CardText>
-                <CardText><i>{source3}</i></CardText>
+                <CardText>
+                  <i>{source3}</i>
+                </CardText>
                 <a href={url3}>
                   <Button>View Source</Button>
                 </a>

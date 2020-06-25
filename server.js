@@ -44,6 +44,9 @@ connection.once("open", () => {
 const userRouter = require("./routes/user");
 app.use("/user", userRouter);
 
+// const homeRouter = require("./routes/home");
+// app.use("/home", homeRouter);
+
 const newsRouter = require("./routes/news");
 app.use("/news", newsRouter);
 

@@ -61,7 +61,7 @@ const Home = () => {
           />
         </FormGroup>
       </Form>
-      <div style={{width: '100%', height: '100%'}}>
+      <div>
       <Plot
         className="d-flex justify-content-center"
         useResizeHandler={true}
@@ -78,7 +78,7 @@ const Home = () => {
         layout={{ title: `${stockSymbol}`, autosize: true }}
       />
       </div>
-      <div style={{width: '100%', height: '100%'}}>
+      <div>
       <Plot
         className="d-flex justify-content-center"
         useResizeHandler={true}
