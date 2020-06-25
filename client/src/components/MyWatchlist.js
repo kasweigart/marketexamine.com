@@ -3,6 +3,8 @@ import { Table } from "reactstrap";
 
 const MyWatchlist = (props) => {
   return (
+    <div className='mt-5'>
+    <h1>My Watchlist</h1>
     <Table>
       <thead>
         <tr>
@@ -74,6 +76,7 @@ const MyWatchlist = (props) => {
         </tr>
       </tbody>
     </Table>
+    </div>
   );
 };
 
