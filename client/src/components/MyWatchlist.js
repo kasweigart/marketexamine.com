@@ -3,7 +3,7 @@ import { Table } from "reactstrap";
 
 const MyWatchlist = (props) => {
   return (
-    <div className='mt-5'>
+    <div className='mt-5 container'>
     <h1>My Watchlist</h1>
     <Table>
       <thead>

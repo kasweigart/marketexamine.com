@@ -17,7 +17,7 @@ function App() {
     <BrowserRouter>
       <div>
         <RSNav />
-        <div className="container">
+        <div className="">
           <Switch>
             <Route exact path="/">
               <Home />

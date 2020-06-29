@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const passport = require("passport");
 const port = 3001;
+const marketsRouter = require("./routes/markets");
 require("dotenv").config();
 
 app.use(function (req, res, next) {
@@ -46,6 +47,9 @@ app.use("/user", userRouter);
 
 // const homeRouter = require("./routes/home");
 // app.use("/home", homeRouter);
+
+
+app.use("/markets", marketsRouter);
 
 const newsRouter = require("./routes/news");
 app.use("/news", newsRouter);

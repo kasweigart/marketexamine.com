@@ -47,8 +47,9 @@ const Contact = (props) => {
   };
 
   return (
-    <div>
-      <h1 className="mt-4">Contact</h1>
+    <div className='container'>
+    
+      <h1 className="mt-5">Contact</h1>
       <Form
         id="contactForm"
         onSubmit={handleSubmit}

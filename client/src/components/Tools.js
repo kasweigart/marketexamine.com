@@ -4,7 +4,7 @@ import Plot from "react-plotly.js";
 
 const Tools = (props) => {
   return (
-    <div className="mt-5">
+    <div className="mt-5 container">
       <h1>Exchange Rates</h1>
       <p>Enter currency codes below along with a value for either one to get the current exchange rate.</p>
       <Form inline className='mb-2'>
@@ -52,7 +52,7 @@ const Tools = (props) => {
         </FormGroup>
         <Button>Submit</Button>
       </Form>
-      <h1 className='mt-4'>Total Stock Return Calculator</h1>
+      <h1 className='mt-4'>Investment Calculator</h1>
       <Form className="form-group-row">
         <FormGroup>
           <Label for="amount">Starting Amount:</Label>

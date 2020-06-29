@@ -4,9 +4,9 @@ import Plot from "react-plotly.js";
 
 const Tools = (props) => {
   return (
-    <div className="mt-5">
+    <div className="mt-5 container">
       <h1>Fundamental Crypto Asset Score (FCAS)</h1>
-      <Form>
+      <Form className='d-flex justify-content-center mb-3'>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
           <Label for="exampleEmail" className="mr-sm-2">
           </Label>

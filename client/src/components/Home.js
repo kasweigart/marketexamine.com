@@ -22,7 +22,6 @@ const Home = () => {
     axios
       .get(apiCall)
       .then((res) => {
-        console.log(res);
         for (var key in res.data["Time Series (Daily)"]) {
           setStockChartXValues((prevArr) => [...prevArr, key]);
           setStockChartYValues((prevArr) => [
@@ -36,17 +35,8 @@ const Home = () => {
       });
   }, [stockSymbol]);
 
-  // axios
-  //   .get("http://localhost:3001/user")
-  //   .then((res) => {
-  //     setData(res.data)
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-
   return (
-    <div>
+    <div className='container'>
       <Form
         className="d-flex justify-content-center"
         onSubmit={changeStockSymbol}
