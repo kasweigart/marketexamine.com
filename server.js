@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
+const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 const passport = require("passport");
 const port = 3001;
-const marketsRouter = require("./routes/markets");
+
 require("dotenv").config();
 
 app.use(function (req, res, next) {
@@ -23,6 +24,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser("secret"));
 
@@ -48,11 +50,14 @@ app.use("/user", userRouter);
 // const homeRouter = require("./routes/home");
 // app.use("/home", homeRouter);
 
-
+const marketsRouter = require("./routes/markets");
 app.use("/markets", marketsRouter);
 
 const newsRouter = require("./routes/news");
 app.use("/news", newsRouter);
+
+const toolsRouter = require("./routes/tools");
+app.use("/tools", toolsRouter);
 
 app.use(express.static(path.join(__dirname, "client/build")));
 

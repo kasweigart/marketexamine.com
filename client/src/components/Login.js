@@ -91,7 +91,7 @@ const Login = (props) => {
               <Label for="password">Password</Label>
               <InputGroup>
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText><span role='img'>🔑</span></InputGroupText>
+                  <InputGroupText><span role='img' aria-label='key'>🔑</span></InputGroupText>
                 </InputGroupAddon>
                 <Input
                   type="password"

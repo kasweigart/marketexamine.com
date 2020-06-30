@@ -1,59 +1,80 @@
-import React from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import React, { useState } from "react";
+import { Button, Form, FormGroup, Label, Input, Fade } from "reactstrap";
 import Plot from "react-plotly.js";
+import axios from "axios";
 
 const Tools = (props) => {
+  const [firstCurr, setFirstCurr] = useState("");
+  const [secondCurr, setSecondCurr] = useState("");
+  const [exchangeRate, setExchangeRate] = useState("");
+  const [fadeIn, setFadeIn] = useState(false);
+
+  const toggle = () => setFadeIn(!fadeIn);
+
+  const onChangeFirstCurr = (e) => {
+    setFirstCurr(e.target.value);
+  };
+
+  const onChangeSecondCurr = (e) => {
+    setSecondCurr(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const exchangeData = {
+      firstCurr,
+      secondCurr,
+    };
+
+    axios
+      .post("/tools/api", exchangeData)
+      .then((res) => {
+        console.log(res);
+        setExchangeRate(
+          parseFloat(res.data["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+        );
+      })
+      .catch((err) => console.log(err));
+    toggle();
+  };
+
   return (
     <div className="mt-5 container">
       <h1>Exchange Rates</h1>
-      <p>Enter currency codes below along with a value for either one to get the current exchange rate.</p>
-      <Form inline className='mb-2'>
+      <p>
+        Enter currency codes below to get the current exchange rate.
+      </p>
+      <p>You can find a list of currency codes <a href="https://www.iban.com/currency-codes">here.</a></p>
+      <Form inline className="mb-2" onSubmit={handleSubmit}>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="currency" className="mr-sm-2">
-          </Label>
+          <Label for="currency" className="mr-sm-2"></Label>
           <Input
             type="text"
             name="currency"
             id="currency"
             placeholder="USD"
+            onChange={onChangeFirstCurr}
+            value={firstCurr}
           />
         </FormGroup>
+        <p className='pt-3'>TO</p>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="curValue" className="mr-sm-2">
-          </Label>
-          <Input
-            type="number"
-            name="curValue"
-            id="curValue"
-            placeholder="Value"
-          />
-        </FormGroup>
-      </Form>
-      <Form inline>
-      <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="currency2" className="mr-sm-2">
-          </Label>
+          <Label for="currency2" className="mr-sm-2"></Label>
           <Input
             type="text"
             name="currency2"
             id="currency2"
-            placeholder="BTC"
-          />
-        </FormGroup>
-        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="curValue2" className="mr-sm-2">
-          </Label>
-          <Input
-            type="number"
-            name="curValue2"
-            id="curValue2"
-            placeholder="Value"
+            placeholder="EUR"
+            onChange={onChangeSecondCurr}
+            value={secondCurr}
           />
         </FormGroup>
         <Button>Submit</Button>
       </Form>
-      <h1 className='mt-4'>Investment Calculator</h1>
-      <Form className="form-group-row">
+      <h1>{exchangeRate}</h1>
+      <h1 className="mt-4">Investment Calculator</h1>
+      <Form inline className="form-group-row">
         <FormGroup>
           <Label for="amount">Starting Amount:</Label>
           <Input type="number" name="amount" id="amount" placeholder="$1,000" />
@@ -86,6 +107,7 @@ const Tools = (props) => {
           <Input type="number" name="grow" id="grow" placeholder="10" />
         </FormGroup>
       </Form>
+
       <div className="" style={{ width: "100%", height: "100%" }}>
         <Plot
           className="d-flex justify-content-center"

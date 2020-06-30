@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Input, Form, FormGroup, Label } from "reactstrap";
+import { Input, Form, FormGroup, Label } from "reactstrap";
 import axios from "axios";
 import Plot from "react-plotly.js";
 
@@ -26,7 +26,7 @@ const Home = () => {
           setStockChartXValues((prevArr) => [...prevArr, key]);
           setStockChartYValues((prevArr) => [
             ...prevArr,
-            res.data["Time Series (Daily)"][key]["1. open"],
+            "$" + res.data["Time Series (Daily)"][key]["1. open"],
           ]);
         }
       })
@@ -36,7 +36,7 @@ const Home = () => {
   }, [stockSymbol]);
 
   return (
-    <div className='container'>
+    <div className="container">
       <Form
         className="d-flex justify-content-center"
         onSubmit={changeStockSymbol}
@@ -52,38 +52,38 @@ const Home = () => {
         </FormGroup>
       </Form>
       <div>
-      <Plot
-        className="d-flex justify-content-center"
-        useResizeHandler={true}
-        style={{width: '100%', height: '100%'}}
-        data={[
-          {
-            x: stockChartXValues,
-            y: stockChartYValues,
-            type: "scatter",
-            mode: "lines+markers",
-            marker: { color: "red" },
-          },
-        ]}
-        layout={{ title: `${stockSymbol}`, autosize: true }}
-      />
+        <Plot
+          className="d-flex justify-content-center"
+          useResizeHandler={true}
+          style={{ width: "100%", height: "100%" }}
+          data={[
+            {
+              x: stockChartXValues,
+              y: stockChartYValues,
+              type: "scatter",
+              mode: "lines+markers",
+              marker: { color: "red" },
+            },
+          ]}
+          layout={{ title: `${stockSymbol} Stock Price`, autosize: true }}
+        />
       </div>
       <div>
-      <Plot
-        className="d-flex justify-content-center"
-        useResizeHandler={true}
-        style={{width: '100%', height: '100%'}}
-        data={[
-          {
-            x: stockChartXValues,
-            y: stockChartYValues,
-            type: "scatter",
-            mode: "lines+markers",
-            marker: { color: "red" },
-          },
-        ]}
-        layout={{ title: `${stockSymbol}`, autosize: true }}
-      />
+        <Plot
+          className="d-flex justify-content-center"
+          useResizeHandler={true}
+          style={{ width: "100%", height: "100%" }}
+          data={[
+            {
+              x: stockChartXValues,
+              y: stockChartYValues,
+              type: "scatter",
+              mode: "lines+markers",
+              marker: { color: "red" },
+            },
+          ]}
+          layout={{ title: `${stockSymbol} Stock Price`, autosize: true }}
+        />
       </div>
     </div>
   );

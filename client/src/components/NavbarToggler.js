@@ -1,6 +1,4 @@
-import React, { useState, useContext } from "react";
-import AuthService from "../Services/AuthService";
-import { AuthContext } from "../Context/AuthContext";
+import React, { useState } from "react";
 import {
   Collapse,
   Navbar,

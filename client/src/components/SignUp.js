@@ -110,7 +110,7 @@ const SignUp = (props) => {
               <Label for="name">Name</Label>
               <InputGroup>
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText><span role='img'>📛</span></InputGroupText>
+                  <InputGroupText><span role='img' aria-label='badge'>📛</span></InputGroupText>
                 </InputGroupAddon>
                 <Input
                   type="text"
@@ -142,7 +142,7 @@ const SignUp = (props) => {
               <Label for="password">Password</Label>
               <InputGroup>
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText><span role='img'>🔑</span></InputGroupText>
+                  <InputGroupText><span role='img' aria-label='key'>🔑</span></InputGroupText>
                 </InputGroupAddon>
                 <Input
                   type="password"
@@ -158,7 +158,7 @@ const SignUp = (props) => {
               <Label for="conPassword">Confirm Password</Label>
               <InputGroup>
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText><span role='img'>🔑</span></InputGroupText>
+                  <InputGroupText><span role='img' aria-label='key'>🔑</span></InputGroupText>
                 </InputGroupAddon>
                 <Input
                   type="password"

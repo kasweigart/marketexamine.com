@@ -1,8 +1,13 @@
-import React from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import React, {useEffect, useState} from "react";
+import {  Form, FormGroup, Label, Input } from "reactstrap";
 import Plot from "react-plotly.js";
 
 const Tools = (props) => {
+
+  useEffect(() => {
+
+  })
+  
   return (
     <div className="mt-5 container">
       <h1>Fundamental Crypto Asset Score (FCAS)</h1>

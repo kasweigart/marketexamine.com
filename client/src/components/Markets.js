@@ -8,10 +8,13 @@ import {
   NavLink,
   ButtonGroup,
   Button,
-  NavbarBrand,
 } from "reactstrap";
 import Plot from "react-plotly.js";
 import axios from "axios";
+
+
+//REWRITE CONTENT WITH LOOPS AND JSX. TOO MUCH COPY AND PASTE. VERY MESSY!
+
 
 const Markets = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +76,6 @@ const Markets = () => {
         );
       })
       .catch((err) => console.log(err));
-    console.log(marketData);
   }, []);
 
   useEffect(() => {
