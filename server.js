@@ -59,6 +59,9 @@ app.use("/news", newsRouter);
 const toolsRouter = require("./routes/tools");
 app.use("/tools", toolsRouter);
 
+const cryptoRouter = require("./routes/crypto");
+app.use("/crypto", cryptoRouter);
+
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.get("/", (req, res) => {
