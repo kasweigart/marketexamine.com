@@ -93,7 +93,7 @@ const Markets = () => {
         className="pl-4 mb-0 pt-2"
         style={{ backgroundColor: "#6c757d", color: "#00FF00" }}
       >
-        Real-time Data
+        Real-Time Data
       </p>
       <Navbar color="secondary" light expand="md">
         <NavbarToggler onClick={toggle} />
