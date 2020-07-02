@@ -194,7 +194,7 @@ const Home = () => {
               type: "path",
               line: { shape: "spline", smoothing: 1.3 },
               mode: "lines",
-              marker: { color: "yellow" },
+              marker: { color: "orange" },
             },
           ]}
           layout={{
@@ -213,75 +213,6 @@ const Home = () => {
           }}
         />
       </div>
-      {/* <div>
-        <Plot
-          className="d-flex justify-content-center"
-          useResizeHandler={true}
-          style={{ width: "100%", height: "100%" }}
-          data={[
-            {
-              name: `${title} (Daily)`,
-              x: stockChartXValues,
-              y: stockChartYValues,
-              type: "scatter",
-              mode: "lines+markers",
-              marker: { color: "red" },
-            },
-            {
-              name: "SMA(20)",
-              x: stockChartXValues,
-              y: sma(stockChartYValues, 20),
-              type: "path",
-              line: { shape: "spline", smoothing: 1.3 },
-              mode: "lines",
-              marker: { color: "blue" },
-            },
-          ]}
-          layout={{
-            title: `${title} Daily Price, SMA(20), EMA(20)`,
-            autosize: true,
-          }}
-        />
-      </div>
-      <div>
-        <Plot
-          className="d-flex justify-content-center"
-          useResizeHandler={true}
-          style={{ width: "100%", height: "100%" }}
-          data={[
-            {
-              name: `${title} (Daily)`,
-              x: stockChartXValues,
-              y: stockChartYValues,
-              type: "scatter",
-              mode: "lines+markers",
-              marker: { color: "red" },
-            },
-            {
-              name: "SMA(20)",
-              x: stockChartXValues,
-              y: sma(stockChartYValues, 20),
-              type: "path",
-              line: { shape: "spline", smoothing: 1.3 },
-              mode: "lines",
-              marker: { color: "blue" },
-            },
-            {
-              name: "EMA(20)",
-              x: stockChartXValues,
-              y: sma(stockChartYValues, 20),
-              type: "path",
-              line: { shape: "spline", smoothing: 1.3 },
-              mode: "lines",
-              marker: { color: "green" },
-            },
-          ]}
-          layout={{
-            title: `${title} Daily Price, SMA(20), EMA(20)`,
-            autosize: true,
-          }}
-        />
-      </div> */}
     </div>
   );
 };
