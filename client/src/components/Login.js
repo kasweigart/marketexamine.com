@@ -1,6 +1,4 @@
-import React, { useState, useContext } from "react";
-import AuthService from "../Services/AuthService";
-import { AuthContext } from "../Context/AuthContext";
+import React, { useState } from "react";
 import {
   Button,
   Modal,
@@ -16,13 +14,13 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from "reactstrap";
+import axios from "axios";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [modal, setModal] = useState(false);
   const [password, setPassword] = useState("");
-  const authContext = useContext(AuthContext);
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -30,6 +28,11 @@ const Login = (props) => {
 
   const onChangePassword = (e) => {
     setPassword(e.target.value);
+  };
+
+  const resetForm = () => {
+    setEmail("");
+    setPassword("");
   };
 
   const onSubmit = (e) => {
@@ -42,16 +45,19 @@ const Login = (props) => {
     if (email === "" || password === "") {
       setMessage(<Alert color="danger">Please fill in all fields.</Alert>);
     } else {
-      AuthService.login(user).then((data) => {
-        console.log(data);
-        const { isAuthenticated, user } = data;
-        if (isAuthenticated) {
-          authContext.setUser(user);
-          authContext.setIsAuthenticated(isAuthenticated);
-        } else
-          setMessage(<Alert color="danger">Invalid email or password.</Alert>);
-      });
+      axios
+        .post("/user/login", user)
+        .then((res) => {
+          if (res.data.error) {
+            setMessage(<Alert color="danger">Invalid email or password.</Alert>)
+          } else
+          localStorage.setItem("usertoken", res.data);
+          setMessage(<Alert color="success">Log in successful.</Alert>);
+          setTimeout(() => (window.location = "/my-watchlist"), 2000);
+        })
+        .catch((err) => console.log(err));
     }
+    resetForm();
   };
 
   const toggle = () => {
@@ -91,7 +97,11 @@ const Login = (props) => {
               <Label for="password">Password</Label>
               <InputGroup>
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText><span role='img' aria-label='key'>🔑</span></InputGroupText>
+                  <InputGroupText>
+                    <span role="img" aria-label="key">
+                      🔑
+                    </span>
+                  </InputGroupText>
                 </InputGroupAddon>
                 <Input
                   type="password"

@@ -40,37 +40,41 @@ const News = (props) => {
   const [time3, setTime3] = useState("");
 
   useEffect(() => {
-    axios("/news").then((res) => {
-      setTitle(res.data.articles[0].title);
-      setDescription(res.data.articles[0].description);
-      setImage(res.data.articles[0].urlToImage);
-      setSource(res.data.articles[0].source.name);
-      setUrl(res.data.articles[0].url);
-      setAuthor(res.data.articles[0].author);
-      setTime(
-        moment(res.data.articles[0].publishedAt).format("dddd, MMMM Do YYYY")
-      );
+    axios
+      .get("/news/api")
+      .then((res) => {
+        // console.log(res.data)
+        setTitle(res.data.articles[0].title);
+        setDescription(res.data.articles[0].description);
+        setImage(res.data.articles[0].urlToImage);
+        setSource(res.data.articles[0].source.name);
+        setUrl(res.data.articles[0].url);
+        setAuthor(res.data.articles[0].author);
+        setTime(
+          moment(res.data.articles[0].publishedAt).format("dddd, MMMM Do YYYY")
+        );
 
-      setTitle2(res.data.articles[1].title);
-      setDescription2(res.data.articles[1].description);
-      setImage2(res.data.articles[1].urlToImage);
-      setSource2(res.data.articles[1].source.name);
-      setUrl2(res.data.articles[1].url);
-      setAuthor2(res.data.articles[1].author);
-      setTime2(
-        moment(res.data.articles[1].publishedAt).format("dddd, MMMM Do YYYY")
-      );
+        setTitle2(res.data.articles[1].title);
+        setDescription2(res.data.articles[1].description);
+        setImage2(res.data.articles[1].urlToImage);
+        setSource2(res.data.articles[1].source.name);
+        setUrl2(res.data.articles[1].url);
+        setAuthor2(res.data.articles[1].author);
+        setTime2(
+          moment(res.data.articles[1].publishedAt).format("dddd, MMMM Do YYYY")
+        );
 
-      setTitle3(res.data.articles[2].title);
-      setDescription3(res.data.articles[2].description);
-      setImage3(res.data.articles[2].urlToImage);
-      setSource3(res.data.articles[2].source.name);
-      setUrl3(res.data.articles[2].url);
-      setAuthor3(res.data.articles[2].author);
-      setTime3(
-        moment(res.data.articles[2].publishedAt).format("dddd, MMMM Do YYYY")
-      );
-    });
+        setTitle3(res.data.articles[2].title);
+        setDescription3(res.data.articles[2].description);
+        setImage3(res.data.articles[2].urlToImage);
+        setSource3(res.data.articles[2].source.name);
+        setUrl3(res.data.articles[2].url);
+        setAuthor3(res.data.articles[2].author);
+        setTime3(
+          moment(res.data.articles[2].publishedAt).format("dddd, MMMM Do YYYY")
+        );
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (

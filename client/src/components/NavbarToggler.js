@@ -8,22 +8,53 @@ import {
   NavItem,
   NavLink,
   UncontrolledDropdown,
+  Button,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import melogo from "../images/melogo.png";
 import SignUp from "./SignUp";
 import Login from "./Login";
+import Signout from "./Signout";
 
 const RSNav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
+  const signOut = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("usertoken");
+    window.location = "/";
+  };
+
+  const defaultLoginButtons = (
+    <>
+      <Link to="sign-up">
+        <SignUp />
+      </Link>
+      <Link to="/login">
+        <Login />
+      </Link>
+    </>
+  );
+
+  const userButtons = <Button onClick={signOut}>Sign Out</Button>;
+
+  const myWatchListNav = (
+    <>
+      <NavItem>
+        <Link to="/my-watchlist" style={{ textDecoration: "none" }}>
+          <NavLink>My Watchlist</NavLink>
+        </Link>
+      </NavItem>
+    </>
+  );
+
   return (
     <div>
       <Navbar light expand="md" className="bg-dark">
         <Link to="/">
-          <img src={melogo} width="32px" className="mr-2"></img>
+          <img src={melogo} width="32px" className="mr-2" alt="logo"></img>
         </Link>
         <Link to="/">
           <NavbarBrand href="https://www.marketexamine.com/">
@@ -43,11 +74,7 @@ const RSNav = () => {
                 <NavLink>News</NavLink>
               </Link>
             </NavItem>
-            <NavItem>
-              <Link to="/my-watchlist" style={{ textDecoration: "none" }}>
-                <NavLink>My Watchlist</NavLink>
-              </Link>
-            </NavItem>
+            {localStorage.usertoken ? myWatchListNav : null}
             <NavItem>
               <Link to="/tools" style={{ textDecoration: "none" }}>
                 <NavLink>Tools</NavLink>
@@ -65,12 +92,7 @@ const RSNav = () => {
             </NavItem>
             <UncontrolledDropdown nav inNavbar></UncontrolledDropdown>
           </Nav>
-          <Link to="sign-up">
-            <SignUp />
-          </Link>
-          <Link to="/login">
-            <Login />
-          </Link>
+          {localStorage.usertoken ? userButtons : defaultLoginButtons}
         </Collapse>
       </Navbar>
     </div>

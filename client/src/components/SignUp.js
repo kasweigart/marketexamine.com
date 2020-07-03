@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import AuthService from "../Services/AuthService";
 import {
   Button,
   Modal,
@@ -13,8 +12,9 @@ import {
   Alert,
   InputGroupAddon,
   InputGroup,
-  InputGroupText
+  InputGroupText,
 } from "reactstrap";
+import axios from "axios";
 
 const SignUp = (props) => {
   const [modal, setModal] = useState(false);
@@ -39,14 +39,6 @@ const SignUp = (props) => {
   const onChangePassword2 = (e) => {
     setPassword2(e.target.value);
   };
-
-  let timerID = useRef(null);
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(timerID);
-    };
-  }, []);
 
   const resetForm = () => {
     setName("");
@@ -73,18 +65,18 @@ const SignUp = (props) => {
         <Alert color="danger">Password must be at least 6 characters.</Alert>
       );
     } else {
-      AuthService.register(user).then((data) => {
-        if (data.message.msgError === false) {
-          setMessage(<Alert color="success">{data.message.msgBody}</Alert>);
-          timerID = setTimeout(() => {
-            window.location = "/";
-          }, 3000);
-        } else if (data.message.msgError === true) {
-          setMessage(<Alert color="danger">{data.message.msgBody}</Alert>);
-        } else {
-          setMessage(<Alert color="danger">An error has occurred.</Alert>);
-        }
-      });
+      axios
+        .post("/user/register", user)
+        .then((res) => {
+          setMessage(
+            <Alert color="success">
+              Your account was successfully registered. Redirecting to the home
+              page... You may now log in.
+            </Alert>
+          );
+          setTimeout(() => (window.location = "/"), 3000);
+        })
+        .catch((err) => console.log(err));
     }
     resetForm();
   };
@@ -110,7 +102,11 @@ const SignUp = (props) => {
               <Label for="name">Name</Label>
               <InputGroup>
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText><span role='img' aria-label='badge'>📛</span></InputGroupText>
+                  <InputGroupText>
+                    <span role="img" aria-label="badge">
+                      📛
+                    </span>
+                  </InputGroupText>
                 </InputGroupAddon>
                 <Input
                   type="text"
@@ -142,7 +138,11 @@ const SignUp = (props) => {
               <Label for="password">Password</Label>
               <InputGroup>
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText><span role='img' aria-label='key'>🔑</span></InputGroupText>
+                  <InputGroupText>
+                    <span role="img" aria-label="key">
+                      🔑
+                    </span>
+                  </InputGroupText>
                 </InputGroupAddon>
                 <Input
                   type="password"
@@ -158,7 +158,11 @@ const SignUp = (props) => {
               <Label for="conPassword">Confirm Password</Label>
               <InputGroup>
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText><span role='img' aria-label='key'>🔑</span></InputGroupText>
+                  <InputGroupText>
+                    <span role="img" aria-label="key">
+                      🔑
+                    </span>
+                  </InputGroupText>
                 </InputGroupAddon>
                 <Input
                   type="password"

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Input, Form, FormGroup, Label } from "reactstrap";
+import { Input, Form, FormGroup, Label, Alert } from "reactstrap";
 import axios from "axios";
 import Plot from "react-plotly.js";
-import sma from "sma";
 
 const Home = () => {
   const [stockChartXValues, setStockChartXValues] = useState([]);
@@ -18,6 +17,8 @@ const Home = () => {
 
   const [stockSymbol, setStockSymbol] = useState("");
   const [title, setTitle] = useState("VOO");
+
+  const [message, setMessage] = useState('')
 
   const onChangeStockSymbol = (e) => {
     setStockSymbol(e.target.value);
@@ -40,7 +41,7 @@ const Home = () => {
     axios
       .post("/home/api/price", stockData)
       .then((res) => {
-        console.log(res);
+        // console.log(res.data);
         setTitle(res.data["Meta Data"]["2. Symbol"].toUpperCase());
         for (var key in res.data["Time Series (Daily)"]) {
           setStockChartXValues((prevArr) => [...prevArr, key]);
@@ -67,7 +68,7 @@ const Home = () => {
       axios
       .post("/home/api/sma", stockData)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         let dataObj = ((Object.values(res.data["Technical Analysis: SMA"])).reverse()).slice(2351)
         for (var key in dataObj) {
           setStockChartXValues((prevArr) => [...prevArr, key]);
@@ -79,7 +80,7 @@ const Home = () => {
       axios
       .post("/home/api/ema", stockData)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         let dataObj = ((Object.values(res.data["Technical Analysis: EMA"])).reverse()).slice(2351)
         for (var key in dataObj) {
           setStockChartXValues((prevArr) => [...prevArr, key]);
@@ -90,6 +91,10 @@ const Home = () => {
   };
 
   useEffect(() => {
+    if (!localStorage.usertoken) {
+      setMessage(<Alert className='mt-3' color="success">Sign up to start your own stock watch-list!</Alert>)
+    }
+
     axios
       .get("/home/api")
       .then((res) => {
@@ -121,10 +126,10 @@ const Home = () => {
     axios
       .get("/home/api/sma")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         let dataObj = ((Object.values(res.data["Technical Analysis: SMA"])).reverse()).slice(2351)
         for (var key in dataObj) {
-          setStockChartXValues((prevArr) => [...prevArr, key]);
+          // setStockChartXValues((prevArr) => [...prevArr, key]);
           setStockChartSMAYValues((prevArr) => [...prevArr, dataObj[key].SMA]);
         }
       })
@@ -133,18 +138,20 @@ const Home = () => {
       axios
       .get("/home/api/ema")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         let dataObj = ((Object.values(res.data["Technical Analysis: EMA"])).reverse()).slice(2351)
         for (var key in dataObj) {
-          setStockChartXValues((prevArr) => [...prevArr, key]);
+          // setStockChartXValues((prevArr) => [...prevArr, key]);
           setStockChartEMAYValues((prevArr) => [...prevArr, dataObj[key].EMA]);
         }
       })
       .catch((err) => console.log(err));
   }, []);
 
+
   return (
     <div className="container">
+    {message}
       <Form className="d-flex justify-content-center" onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="search"></Label>

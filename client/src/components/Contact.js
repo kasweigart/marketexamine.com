@@ -28,7 +28,7 @@ const Contact = (props) => {
     const modalHeader = document.getElementById("modalHeader");
 
     axios
-      .post("/api/contact", {
+      .post("/contact/api", {
         from: `${name} ${email}`,
         message,
       })
@@ -88,7 +88,7 @@ const Contact = (props) => {
             Please resubmit your completed form or try again later.
           </ModalBody>
           <ModalFooter>
-            <Button color="info" onClick={toggle}>
+            <Button color="secondary" onClick={toggle}>
               Ok
             </Button>
           </ModalFooter>

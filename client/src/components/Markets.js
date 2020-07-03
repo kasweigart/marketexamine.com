@@ -39,7 +39,7 @@ const Markets = () => {
     axios
       .get("/markets/api")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setMarketData(res.data);
         setInfoTech(
           res.data["Rank A: Real-Time Performance"]["Information Technology"]

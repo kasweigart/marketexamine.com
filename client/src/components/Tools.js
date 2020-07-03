@@ -56,7 +56,7 @@ const Tools = (props) => {
     axios
       .post("/tools/api", exchangeData)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setExchangeRate(
           parseFloat(
             res.data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
@@ -71,22 +71,22 @@ const Tools = (props) => {
 
     let periodInterval;
 
-    if (period == "Weekly") {
+    if (period === "Weekly") {
       periodInterval = 52;
     }
-    if (period == "Bi-Weekly") {
+    if (period === "Bi-Weekly") {
       periodInterval = 26;
     }
-    if (period == "Monthly") {
+    if (period === "Monthly") {
       periodInterval = 12;
     }
-    if (period == "Quarterly") {
+    if (period === "Quarterly") {
       periodInterval = 3;
     }
-    if (period == "Semi-Annually") {
+    if (period === "Semi-Annually") {
       periodInterval = 2;
     }
-    if (period == "Annually") {
+    if (period === "Annually") {
       periodInterval = 1;
     }
 
@@ -204,23 +204,6 @@ const Tools = (props) => {
         <Button className="mb-3">Submit</Button>
       </Form>
       <h1>{investment}</h1>
-      <div className="" style={{ width: "100%", height: "100%" }}>
-        <Plot
-          className="d-flex justify-content-center"
-          useResizeHandler={true}
-          style={{ width: "100%", height: "100%" }}
-          data={[
-            {
-              x: investmentXValues,
-              y: [1,2,3,4,5,6,7,8,9,10],
-              type: "scatter",
-              mode: "lines+markers",
-              marker: { color: "red" },
-            },
-          ]}
-          layout={{ title: `Your Investment`, autosize: true }}
-        />
-      </div>
     </div>
   );
 };

@@ -1,10 +1,7 @@
 const express = require("express");
 const app = express();
-const bodyParser = require('body-parser')
-const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
-const passport = require("passport");
 const port = 3001;
 
 require("dotenv").config();
@@ -26,11 +23,6 @@ app.use(function (req, res, next) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cookieParser("secret"));
-
-app.use(passport.initialize());
-
-require("./config/passport")(passport);
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
@@ -61,6 +53,9 @@ app.use("/tools", toolsRouter);
 
 const cryptoRouter = require("./routes/crypto");
 app.use("/crypto", cryptoRouter);
+
+const contactRouter = require("./routes/contact");
+app.use("/contact", contactRouter);
 
 app.use(express.static(path.join(__dirname, "client/build")));
 
