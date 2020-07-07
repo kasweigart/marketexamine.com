@@ -33,6 +33,8 @@ const Home = () => {
     setStockChartHighYValues([]);
     setStockChartLowYValues([]);
     setStockChartCloseYValues([]);
+    setStockChartSMAYValues([])
+    setStockChartEMAYValues([])
 
     const stockData = {
       stockSymbol,

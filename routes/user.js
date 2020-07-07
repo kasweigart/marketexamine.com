@@ -4,7 +4,22 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const Watchlist = require("../models/watchlist");
+const apiKey = process.env.IEXCLOUD_SECRET_KEY
+const axios = require("axios");
 require("dotenv");
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.email = user;
+    console.log(user);
+    next();
+  });
+}
 
 userRouter.post("/register", (req, res) => {
   const { name, email, password } = req.body;
@@ -48,9 +63,10 @@ userRouter.post("/login", (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            watchlist: user.watchlist,
           };
           let token = jwt.sign(payload, process.env.SECRET_KEY, {
-            expiresIn: 1440,
+            expiresIn: 3600,
           });
           res.send(token);
         } else {
@@ -65,24 +81,42 @@ userRouter.post("/login", (req, res) => {
     });
 });
 
-userRouter.get("/my-watchlist", (req, res) => {
-  var decoded = jwt.verify(
-    req.headers["authorization"],
-    process.env.SECRET_KEY
-  );
+userRouter.post("/my-watchlist", authenticateToken, (req, res) => {
+  const newStock = new Watchlist({ name: req.body.stockSymbol });
+  newStock.save(() => {
+    User.findById({ _id: req.email._id })
+      .then((user) => {
+        user.watchlist.push(newStock);
+        user.save();
+      })
+      .catch((err) => console.log(err));
+  });
+});
 
-  User.findOne({
-    _id: decoded._id,
-  })
-    .then((user) => {
-      if (user) {
-        res.json(user);
-      } else {
-        res.send("User does not exist");
+userRouter.get("/my-watchlist", authenticateToken, (req, res) => {
+  User.findById({ _id: req.email._id })
+    .populate("watchlist")
+    .exec((err, document) => {
+      if (err)
+        res
+          .status(500)
+          .json({ message: { msgBody: "Error has occured", msgError: true } });
+      else {
+        res.status(200).json({ watchlist: document.watchlist });
       }
+    });
+});
+
+userRouter.post("/api/my-watchlist", authenticateToken, (req, res) => {
+  axios
+    .get(
+      `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${req.body.stocks}&types=quote&range=1m&last=5&token=${apiKey}`
+    )
+    .then(function (response) {
+      res.send(response.data);
     })
-    .catch((err) => {
-      res.send("error: " + err);
+    .catch(function (error) {
+      console.log(error);
     });
 });
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Collapse,
   Navbar,
@@ -9,15 +9,17 @@ import {
   NavLink,
   UncontrolledDropdown,
   Button,
+  NavbarText,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import melogo from "../images/melogo.png";
 import SignUp from "./SignUp";
 import Login from "./Login";
-import Signout from "./Signout";
+import jwtDecode from "jwt-decode";
 
 const RSNav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState("");
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -49,6 +51,20 @@ const RSNav = () => {
       </NavItem>
     </>
   );
+
+  const welcomeUser = (
+    <NavbarText className="mr-3">
+      Welcome back, {name}
+    </NavbarText>
+  );
+
+  useEffect(() => {
+    if (localStorage.usertoken) {
+      const token = localStorage.usertoken;
+      const decoded = jwtDecode(token);
+      setName(decoded.name);
+    } else return;
+  }, []);
 
   return (
     <div>
@@ -92,6 +108,7 @@ const RSNav = () => {
             </NavItem>
             <UncontrolledDropdown nav inNavbar></UncontrolledDropdown>
           </Nav>
+          {localStorage.usertoken ? welcomeUser : null}
           {localStorage.usertoken ? userButtons : defaultLoginButtons}
         </Collapse>
       </Navbar>

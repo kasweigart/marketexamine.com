@@ -16,5 +16,8 @@ html {
   background-color: #f8f9fa;
 }
 
+.navbar-light .navbar-text {
+  color: white !important
+}
 
 

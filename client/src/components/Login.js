@@ -52,7 +52,7 @@ const Login = (props) => {
             setMessage(<Alert color="danger">Invalid email or password.</Alert>)
           } else
           localStorage.setItem("usertoken", res.data);
-          setMessage(<Alert color="success">Log in successful.</Alert>);
+          setMessage(<Alert color="success">Login successful.</Alert>);
           setTimeout(() => (window.location = "/my-watchlist"), 2000);
         })
         .catch((err) => console.log(err));
