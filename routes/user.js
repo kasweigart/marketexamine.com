@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const Watchlist = require("../models/watchlist");
-const apiKey = process.env.IEXCLOUD_SECRET_KEY
+const apiKey = process.env.IEXCLOUD_SECRET_KEY;
 const axios = require("axios");
 require("dotenv");
 
@@ -65,9 +65,7 @@ userRouter.post("/login", (req, res) => {
             email: user.email,
             watchlist: user.watchlist,
           };
-          let token = jwt.sign(payload, process.env.SECRET_KEY, {
-            expiresIn: 3600,
-          });
+          let token = jwt.sign(payload, process.env.SECRET_KEY);
           res.send(token);
         } else {
           res.json({ error: "User does not exist" });
@@ -105,6 +103,17 @@ userRouter.get("/my-watchlist", authenticateToken, (req, res) => {
         res.status(200).json({ watchlist: document.watchlist });
       }
     });
+});
+
+userRouter.post("/my-watchlist/delete", authenticateToken, (req, res) => {
+  User.findById({ _id: req.email._id })
+    .then((user) => {
+      const index = user.watchlist.indexOf(req.body.stockSymbol);
+      user.watchlist.splice(index, 1);
+      res.json({ msg: 'Stock deleted'})
+      user.save();
+    })
+    .catch((err) => console.log(err));
 });
 
 userRouter.post("/api/my-watchlist", authenticateToken, (req, res) => {

@@ -18,7 +18,7 @@ const Home = () => {
   const [stockSymbol, setStockSymbol] = useState("");
   const [title, setTitle] = useState("VOO");
 
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState("");
 
   const onChangeStockSymbol = (e) => {
     setStockSymbol(e.target.value);
@@ -33,8 +33,8 @@ const Home = () => {
     setStockChartHighYValues([]);
     setStockChartLowYValues([]);
     setStockChartCloseYValues([]);
-    setStockChartSMAYValues([])
-    setStockChartEMAYValues([])
+    setStockChartSMAYValues([]);
+    setStockChartEMAYValues([]);
 
     const stockData = {
       stockSymbol,
@@ -67,25 +67,27 @@ const Home = () => {
       })
       .catch((err) => console.log(err));
 
-      axios
+    axios
       .post("/home/api/sma", stockData)
       .then((res) => {
         // console.log(res.data);
-        let dataObj = ((Object.values(res.data["Technical Analysis: SMA"])).reverse()).slice(2351)
+        let dataObj = Object.values(res.data["Technical Analysis: SMA"])
+          .reverse()
+          .slice(2351);
         for (var key in dataObj) {
-          setStockChartXValues((prevArr) => [...prevArr, key]);
           setStockChartSMAYValues((prevArr) => [...prevArr, dataObj[key].SMA]);
         }
       })
       .catch((err) => console.log(err));
 
-      axios
+    axios
       .post("/home/api/ema", stockData)
       .then((res) => {
         // console.log(res.data);
-        let dataObj = ((Object.values(res.data["Technical Analysis: EMA"])).reverse()).slice(2351)
+        let dataObj = Object.values(res.data["Technical Analysis: EMA"])
+          .reverse()
+          .slice(2351);
         for (var key in dataObj) {
-          setStockChartXValues((prevArr) => [...prevArr, key]);
           setStockChartEMAYValues((prevArr) => [...prevArr, dataObj[key].EMA]);
         }
       })
@@ -94,7 +96,11 @@ const Home = () => {
 
   useEffect(() => {
     if (!localStorage.usertoken) {
-      setMessage(<Alert className='mt-3' color="success">Sign up to start your own stock watch-list!</Alert>)
+      setMessage(
+        <Alert className="mt-3" color="success">
+          Sign up to start your own stock watch-list!
+        </Alert>
+      );
     }
 
     axios
@@ -129,7 +135,9 @@ const Home = () => {
       .get("/home/api/sma")
       .then((res) => {
         // console.log(res.data);
-        let dataObj = ((Object.values(res.data["Technical Analysis: SMA"])).reverse()).slice(2351)
+        let dataObj = Object.values(res.data["Technical Analysis: SMA"])
+          .reverse()
+          .slice(2351);
         for (var key in dataObj) {
           // setStockChartXValues((prevArr) => [...prevArr, key]);
           setStockChartSMAYValues((prevArr) => [...prevArr, dataObj[key].SMA]);
@@ -137,11 +145,13 @@ const Home = () => {
       })
       .catch((err) => console.log(err));
 
-      axios
+    axios
       .get("/home/api/ema")
       .then((res) => {
         // console.log(res.data);
-        let dataObj = ((Object.values(res.data["Technical Analysis: EMA"])).reverse()).slice(2351)
+        let dataObj = Object.values(res.data["Technical Analysis: EMA"])
+          .reverse()
+          .slice(2351);
         for (var key in dataObj) {
           // setStockChartXValues((prevArr) => [...prevArr, key]);
           setStockChartEMAYValues((prevArr) => [...prevArr, dataObj[key].EMA]);
@@ -150,10 +160,9 @@ const Home = () => {
       .catch((err) => console.log(err));
   }, []);
 
-
   return (
     <div className="container">
-    {message}
+      {message}
       <Form className="d-flex justify-content-center" onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="search"></Label>

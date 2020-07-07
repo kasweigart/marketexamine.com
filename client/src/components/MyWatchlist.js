@@ -19,14 +19,13 @@ const MyWatchlist = () => {
   const [stocks, setStocks] = useState([]);
   const [stockData, setStockData] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [deleteSymbol, setDeleteSymbol] = useState("");
 
   const onChangeStockSymbol = (e) => {
     setStockSymbol(e.target.value);
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
     axios({
       method: "post",
       url: "/user/my-watchlist",
@@ -37,6 +36,36 @@ const MyWatchlist = () => {
         stockSymbol: stockSymbol,
       },
     }).then((res) => console.log(res));
+  };
+
+  const handleDelete = (e) => {
+    let targetStock = "";
+    stocks.map((stock) => {
+      if (stock.name.toUpperCase() === e.target.id) {
+        targetStock = stock._id;
+      }
+      console.log(targetStock);
+    });
+    const data = {
+      stockSymbol: targetStock,
+    };
+
+    axios({
+      method: "post",
+      url: "/user/my-watchlist/delete",
+      headers: {
+        Authorization: `Bearer ${localStorage.usertoken}`,
+      },
+      data: {
+        stockSymbol: targetStock,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+
+    refreshPage();
   };
 
   useEffect(() => {
@@ -62,6 +91,7 @@ const MyWatchlist = () => {
       })
       .then(
         (res) => {
+          console.log(res.data);
           setStocks(res.data.watchlist);
           setDataLoaded(true);
         },
@@ -88,16 +118,22 @@ const MyWatchlist = () => {
     }
   }, [dataLoaded]);
 
+  const refreshPage = () => {
+    window.location.reload();
+    return false;
+  };
+
   const tableRow = stockData.map((stock) => {
-    console.log(stockData)
     return (
       <tr>
         <th scope="row">{stockData.indexOf(stock) + 1}</th>
         <td>{stock.quote.companyName}</td>
         <td>{stock.quote.symbol}</td>
-        <td>${stock.quote.close}</td>
+        <td>${stock.quote.iexClose}</td>
         <td>
-          <Button color="danger">Delete</Button>
+          <Button color="danger" id={stock.quote.symbol} onClick={handleDelete}>
+            Delete
+          </Button>
         </td>
       </tr>
     );
@@ -106,7 +142,9 @@ const MyWatchlist = () => {
   return (
     <div className="mt-5 container">
       <h1>My Watchlist</h1>
-      <p>Add up to five stocks of your choice and view their current prices.</p>
+      <p>
+        Add up stocks to your personal watchlist and get their current prices.
+      </p>
       <Form className="d-flex justify-content-center" onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="search"></Label>
