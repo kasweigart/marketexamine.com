@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const userRouter = express.Router();
 const jwt = require("jsonwebtoken");
@@ -6,7 +7,7 @@ const User = require("../models/user");
 const Watchlist = require("../models/watchlist");
 const apiKey = process.env.IEXCLOUD_SECRET_KEY;
 const axios = require("axios");
-require("dotenv");
+
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];

@@ -21,7 +21,6 @@
   "homepage": "https://github.com/kasweigart/marketexamine.com#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.2.0",
     "cors": "^2.8.5",
