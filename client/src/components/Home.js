@@ -216,7 +216,7 @@ const Home = () => {
             },
           ]}
           layout={{
-            title: `${title} Daily Price, SMA(20), EMA(20)`,
+            title: `${title} Daily Price`,
             autosize: true,
             dragmode: "zoom",
             margin: { r: 10, t: 25, b: 40, l: 60 },
