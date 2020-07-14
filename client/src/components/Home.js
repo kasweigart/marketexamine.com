@@ -67,31 +67,31 @@ const Home = () => {
       })
       .catch((err) => console.log(err));
 
-    axios
-      .post("/home/api/sma", stockData)
-      .then((res) => {
-        // console.log(res.data);
-        let dataObj = Object.values(res.data["Technical Analysis: SMA"])
-          .reverse()
-          .slice(2351);
-        for (var key in dataObj) {
-          setStockChartSMAYValues((prevArr) => [...prevArr, dataObj[key].SMA]);
-        }
-      })
-      .catch((err) => console.log(err));
+    // axios
+    //   .post("/home/api/sma", stockData)
+    //   .then((res) => {
+    //     // console.log(res.data);
+    //     let dataObj = Object.values(res.data["Technical Analysis: SMA"])
+    //       .reverse()
+    //       .slice(2351);
+    //     for (var key in dataObj) {
+    //       setStockChartSMAYValues((prevArr) => [...prevArr, dataObj[key].SMA]);
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
 
-    axios
-      .post("/home/api/ema", stockData)
-      .then((res) => {
-        // console.log(res.data);
-        let dataObj = Object.values(res.data["Technical Analysis: EMA"])
-          .reverse()
-          .slice(2351);
-        for (var key in dataObj) {
-          setStockChartEMAYValues((prevArr) => [...prevArr, dataObj[key].EMA]);
-        }
-      })
-      .catch((err) => console.log(err));
+    // axios
+    //   .post("/home/api/ema", stockData)
+    //   .then((res) => {
+    //     // console.log(res.data);
+    //     let dataObj = Object.values(res.data["Technical Analysis: EMA"])
+    //       .reverse()
+    //       .slice(2351);
+    //     for (var key in dataObj) {
+    //       setStockChartEMAYValues((prevArr) => [...prevArr, dataObj[key].EMA]);
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -131,33 +131,33 @@ const Home = () => {
         console.log(err);
       });
 
-    axios
-      .get("/home/api/sma")
-      .then((res) => {
-        // console.log(res.data);
-        let dataObj = Object.values(res.data["Technical Analysis: SMA"])
-          .reverse()
-          .slice(2351);
-        for (var key in dataObj) {
-          // setStockChartXValues((prevArr) => [...prevArr, key]);
-          setStockChartSMAYValues((prevArr) => [...prevArr, dataObj[key].SMA]);
-        }
-      })
-      .catch((err) => console.log(err));
+    // axios
+    //   .get("/home/api/sma")
+    //   .then((res) => {
+    //     // console.log(res.data);
+    //     let dataObj = Object.values(res.data["Technical Analysis: SMA"])
+    //       .reverse()
+    //       .slice(2351);
+    //     for (var key in dataObj) {
 
-    axios
-      .get("/home/api/ema")
-      .then((res) => {
-        // console.log(res.data);
-        let dataObj = Object.values(res.data["Technical Analysis: EMA"])
-          .reverse()
-          .slice(2351);
-        for (var key in dataObj) {
-          // setStockChartXValues((prevArr) => [...prevArr, key]);
-          setStockChartEMAYValues((prevArr) => [...prevArr, dataObj[key].EMA]);
-        }
-      })
-      .catch((err) => console.log(err));
+    //       setStockChartSMAYValues((prevArr) => [...prevArr, dataObj[key].SMA]);
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
+
+    // axios
+    //   .get("/home/api/ema")
+    //   .then((res) => {
+    //     // console.log(res.data);
+    //     let dataObj = Object.values(res.data["Technical Analysis: EMA"])
+    //       .reverse()
+    //       .slice(2351);
+    //     for (var key in dataObj) {
+
+    //       setStockChartEMAYValues((prevArr) => [...prevArr, dataObj[key].EMA]);
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
   }, []);
 
   return (
